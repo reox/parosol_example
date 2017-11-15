@@ -1,3 +1,5 @@
+# Result folder name
+RESULTS := ./results
 
 # Path to the mpirun executable
 MPIRUN := /usr/lib64/openmpi/bin/mpirun
@@ -21,8 +23,21 @@ TOLERANCE := 1e-7
 # Level of parosol (default is 6)
 LEVEL := 3
 
-all:
-	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} ${MESH}
+
+###
+MESHNAME := $(notdir ${MESH})
+
+
+all: ${RESULTS}/${MESHNAME}
+	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $<
+
+${RESULTS}/${MESHNAME}: ${MESH}
+	# ParOSol writes the data back into the h5 file.
+	# Therefore we copy it to the result place and modify it there
+	[ -d ${RESULTS} ] || mkdir -p ${RESULTS}
+	cp ${MESH} ${RESULTS}/
+	h5mkgrp ${RESULTS}/${MESHNAME} "Parameters"
+
 
 
 # To view h5 files, there is hdfview
