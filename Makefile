@@ -17,23 +17,23 @@ MESH := mesh/h5/sphere.h5
 
 ### Tool Paths
 # Path to the ParOSol executable
-PAROSOL := /programs/shared/medtool4.1/linux64-SL73/parosol
+PAROSOL := ../parosol-tu-wien/build/parosol
 # Path to h5mkgrp tool
-H5MKGRP := /usr/lib64/openmpi/bin/h5mkgrp
+H5MKGRP := h5mkgrp
 # Path to the mpirun executable
-MPIRUN := /usr/lib64/openmpi/bin/mpirun
+MPIRUN := mpirun
 
 # Path to the createxmf.py executable
 # We need hd5py for this tool :(
 # Thus we can not use it on the felab machines...
-CREATEXMF := ./parosol-tu-wien/tools/createxmf.py
+CREATEXMF := ../parosol-tu-wien/tools/createxmf.py
 
 ### Options for mpirun
 # Get the number of cores on this computer
-CORES := $(shell lscpu | awk '/ per socket/ {print $$4}')
+CORES := $(shell LANG=C lscpu | awk '/ per socket/ {print $$4}')
 
 ### Options for Parasol
-# Tolerance of parosol (default is 1e-6
+# Tolerance of parosol (default is 1e-6)
 TOLERANCE := 1e-7
 # Level of parosol (default is 6)
 LEVEL := 3
@@ -42,7 +42,9 @@ LEVEL := 3
 
 MESHNAME := $(notdir ${MESH})
 
-all: ${RESULTS}/${MESHNAME}
+XMF := $(patsubst %.h5,%.xmf,${MESHNAME})
+
+all: ${RESULTS}/${MESHNAME} ${RESULTS}/${XMF}
 	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $<
 
 ${RESULTS}/${MESHNAME}: ${MESH}
@@ -53,12 +55,16 @@ ${RESULTS}/${MESHNAME}: ${MESH}
 	# We need a new group Parameters, otherwise parosol does not work...
 	${H5MKGRP} ${RESULTS}/${MESHNAME} "Parameters"
 
+%.xmf: %.h5
+	# Create an xmf file from the h5 file.
+	# this file can then be loaded in paraview
+	${CREATEXMF} $<
+
 clean:
 	rm -rf ${RESULTS}
 
+# Keep h5 file in results
+.PRECIOUS: ${RESULTS}/${MESHNAME}
+
+# Not real rules...
 .PHONY: all clean
-
-
-# To view h5 files, there is hdfview
-# But hdfview only shows arrays! Therefore we like to convert the image to
-# a real image format and show it with paraview...
