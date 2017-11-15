@@ -17,14 +17,14 @@ MESH := mesh/h5/sphere.h5
 
 ### Tool Paths
 # Path to the ParOSol executable
-PAROSOL := ../parosol-tu-wien/build/parosol
+PAROSOL := parosol
 # Path to h5mkgrp tool
 H5MKGRP := h5mkgrp
 # Path to the mpirun executable
 MPIRUN := mpirun
 
 # Path to the createxmf.py executable
-CREATEXMF := ../parosol-tu-wien/tools/createxmf.py
+CREATEXMF := createxmf
 
 ### Options for mpirun
 # Get the number of cores on this computer
