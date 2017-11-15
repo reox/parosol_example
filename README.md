@@ -1,4 +1,4 @@
-Prequsites on Debian
+Prequisites on Debian
 ====================
 Install the following packages
 
