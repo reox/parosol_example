@@ -24,8 +24,6 @@ H5MKGRP := h5mkgrp
 MPIRUN := mpirun
 
 # Path to the createxmf.py executable
-# We need hd5py for this tool :(
-# Thus we can not use it on the felab machines...
 CREATEXMF := ../parosol-tu-wien/tools/createxmf.py
 
 ### Options for mpirun
