@@ -15,10 +15,13 @@ RESULTS := ./results
 # h5 input file to parosol
 MESH := mesh/h5/sphere.h5
 
-# Path to the mpirun executable
-MPIRUN := /usr/lib64/openmpi/bin/mpirun
+### Tool Paths
 # Path to the ParOSol executable
 PAROSOL := /programs/shared/medtool4.1/linux64-SL73/parosol
+# Path to h5mkgrp tool
+H5MKGRP := /usr/lib64/openmpi/bin/h5mkgrp
+# Path to the mpirun executable
+MPIRUN := /usr/lib64/openmpi/bin/mpirun
 
 # Path to the createxmf.py executable
 # We need hd5py for this tool :(
@@ -47,7 +50,8 @@ ${RESULTS}/${MESHNAME}: ${MESH}
 	# Therefore we copy it to the result place and modify it there
 	[ -d ${RESULTS} ] || mkdir -p ${RESULTS}
 	cp ${MESH} ${RESULTS}/
-	h5mkgrp ${RESULTS}/${MESHNAME} "Parameters"
+	# We need a new group Parameters, otherwise parosol does not work...
+	${H5MKGRP} ${RESULTS}/${MESHNAME} "Parameters"
 
 clean:
 	rm -rf ${RESULTS}
