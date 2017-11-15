@@ -12,6 +12,7 @@ Building ParOSol
 ================
 
 Use this repository: [reox/parosol-tu-wien](https://github.com/reox/parosol-tu-wien)
+and follow the build instructions there.
 
 Using ParOSol
 =============
@@ -33,6 +34,6 @@ into `results/sphere.h5`. Also a `results/sphere.xmf` file will be created.
 
 Open this file using `paraview`.
 
-If everything was sucessful, you should see something like this:
+If everything was successful, you should see something like this:
 
 ![Image of sphere.h5](/images/deathstar.png)
