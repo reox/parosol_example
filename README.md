@@ -32,3 +32,7 @@ If you run `make`, ParOSol will make the calculations and write the results back
 into `results/sphere.h5`. Also a `results/sphere.xmf` file will be created.
 
 Open this file using `paraview`.
+
+If everything was sucessful, you should see something like this:
+
+![Image of sphere.h5](/images/deathstar.png)
