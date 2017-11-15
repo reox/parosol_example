@@ -22,7 +22,9 @@ the ParOSol repository.
 
 First, adjust the paths in `Makefile`. We assume that you checked out the
 parosol-tu-wien repository one folder below this repository and already
-sucessfully build ParOSol.
+successfully build ParOSol.
+Otherwise you have to adjust the paths of `parosol` and `createxmf.py` binaries
+too.
 
 By default, we configure `mpirun` to use all available physical CPU cores. Be
 aware of that!
@@ -31,7 +33,6 @@ The example will use the mesh `sphere.h5`.
 
 If you run `make`, ParOSol will make the calculations and write the results back
 into `results/sphere.h5`. Also a `results/sphere.xmf` file will be created.
-
 Open this file using `paraview`.
 
 If everything was successful, you should see something like this:
