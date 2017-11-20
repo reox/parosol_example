@@ -42,7 +42,7 @@ MESHNAME := $(notdir ${MESH})
 
 XMF := $(patsubst %.h5,%.xmf,${MESHNAME})
 
-all: ${RESULTS}/${MESHNAME} ${RESULTS}/${XMF}
+${RESULTS}/${XMF}: ${RESULTS}/${MESHNAME}
 	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $<
 
 ${RESULTS}/${MESHNAME}: ${MESH}

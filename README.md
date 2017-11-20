@@ -6,7 +6,7 @@ Install the following packages
 
 For inspecting the data, these packages are required:
 
-    paraview hdfview
+    paraview hdf-compass | hdfview
 
 Building ParOSol
 ================
@@ -38,3 +38,12 @@ Open this file using `paraview`.
 If everything was successful, you should see something like this:
 
 ![Image of sphere.h5](/images/deathstar.png)
+
+Create own input data
+=====================
+
+Using the tool `h5dump`, you can inspect existing data.
+A description of the dataformat is available in the [userguide](https://github.com/reox/parosol-tu-wien/blob/master/doc/userguide.mkd#file-format).
+Additionally to the there mentioned fields, a `/Parameters` group is required!
+The `Makefile` adds it before passing the data to ParOSol, but you can also add
+it already beforehand.
