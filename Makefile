@@ -22,7 +22,6 @@ PAROSOL := parosol
 H5MKGRP := h5mkgrp
 # Path to the mpirun executable
 MPIRUN := mpirun
-
 # Path to the createxmf.py executable
 CREATEXMF := createxmf
 
@@ -34,7 +33,7 @@ CORES := $(shell LANG=C lscpu | awk '/ per socket/ {print $$4}')
 # Tolerance of parosol (default is 1e-6)
 TOLERANCE := 1e-7
 # Level of parosol (default is 6)
-LEVEL := 6
+LEVEL := 3
 
 #### END OF SETTINGS
 
@@ -48,9 +47,10 @@ ${RESULTS}/${MESHNAME}: ${MESH}
 	# ParOSol writes the data back into the h5 file.
 	# Therefore we copy it to the result place and modify it there
 	[ -d ${RESULTS} ] || mkdir -p ${RESULTS}
-	cp ${MESH} ${RESULTS}/
+	cp $< ${RESULTS}
 	# We need a new group Parameters, otherwise parosol does not work...
-	${H5MKGRP} ${RESULTS}/${MESHNAME} "Parameters"
+	${H5MKGRP} $@ "Parameters"
+	# Start ParOSol using mpirun
 	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $@
 
 %.xmf: %.h5
