@@ -34,7 +34,7 @@ CORES := $(shell LANG=C lscpu | awk '/ per socket/ {print $$4}')
 # Tolerance of parosol (default is 1e-6)
 TOLERANCE := 1e-7
 # Level of parosol (default is 6)
-LEVEL := 3
+LEVEL := 6
 
 #### END OF SETTINGS
 
@@ -42,8 +42,7 @@ MESHNAME := $(notdir ${MESH})
 
 XMF := $(patsubst %.h5,%.xmf,${MESHNAME})
 
-${RESULTS}/${XMF}: ${RESULTS}/${MESHNAME}
-	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $<
+all: ${RESULTS/XMF} ${RESULTS}/${MESHNAME}
 
 ${RESULTS}/${MESHNAME}: ${MESH}
 	# ParOSol writes the data back into the h5 file.
@@ -52,6 +51,7 @@ ${RESULTS}/${MESHNAME}: ${MESH}
 	cp ${MESH} ${RESULTS}/
 	# We need a new group Parameters, otherwise parosol does not work...
 	${H5MKGRP} ${RESULTS}/${MESHNAME} "Parameters"
+	${MPIRUN} -np ${CORES} ${PAROSOL} --level ${LEVEL} --tol ${TOLERANCE} $@
 
 %.xmf: %.h5
 	# Create an xmf file from the h5 file.
@@ -60,9 +60,6 @@ ${RESULTS}/${MESHNAME}: ${MESH}
 
 clean:
 	rm -rf ${RESULTS}
-
-# Keep h5 file in results
-.PRECIOUS: ${RESULTS}/${MESHNAME}
 
 # Not real rules...
 .PHONY: all clean
