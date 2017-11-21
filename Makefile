@@ -42,7 +42,7 @@ MESHNAME := $(notdir ${MESH})
 
 XMF := $(patsubst %.h5,%.xmf,${MESHNAME})
 
-all: ${RESULTS/XMF} ${RESULTS}/${MESHNAME}
+all: ${RESULTS}/${XMF} ${RESULTS}/${MESHNAME}
 
 ${RESULTS}/${MESHNAME}: ${MESH}
 	# ParOSol writes the data back into the h5 file.
