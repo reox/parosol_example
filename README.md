@@ -49,3 +49,23 @@ Depending on the version you use, a `/Parameters` group is required (it is never
 used though).
 The `Makefile` adds it before passing the data to ParOSol, but you can also add
 it already beforehand.
+
+Units
+=====
+
+Units are not used inside ParOSol. But If you use a consistent unit schema, all
+your results will also be consistent.
+
+**TO BE CONFIRMED**
+
+Input Data:
+
+* Voxelsize: [mm]
+* Loading: [MPa]
+* E-Module (Value in `Image_Data`): [MPa]
+
+Output Data:
+
+* Strains: all six components of strain tensor + SED + Effective Strain (`sqrt(2*SED/YoungsMod`)
+* Stresses: all six components of stress tensor + Von Mises
+
