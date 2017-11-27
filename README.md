@@ -1,12 +1,12 @@
 Prequisites on Debian
 ====================
-Install the following packages
+For inspecting the data, these packages are suggested:
 
-    libopenmpi-dev hdf5-tools openmpi-bin
+    paraview
+    hdf-compass | hdfview
 
-For inspecting the data, these packages are required:
-
-    paraview hdf-compass | hdfview
+To use the `Makefile` you need `hdf5-tools` as well as the ParOSol package
+installed.
 
 Building ParOSol
 ================
@@ -44,6 +44,8 @@ Create own input data
 
 Using the tool `h5dump`, you can inspect existing data.
 A description of the dataformat is available in the [userguide](https://github.com/reox/parosol-tu-wien/blob/master/doc/userguide.mkd#file-format).
-Additionally to the there mentioned fields, a `/Parameters` group is required!
+
+Depending on the version you use, a `/Parameters` group is required (it is never
+used though).
 The `Makefile` adds it before passing the data to ParOSol, but you can also add
 it already beforehand.
