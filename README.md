@@ -72,6 +72,29 @@ A last note: ParOSol works directly on the given file. That means, if you do not
 want your input data to be changed (allthough ParOSol will not write in the
 Image data), you need to copy the file.
 
+Boundary Conditions
+===================
+
+There are two types of boundary conditions known to ParOSol: Loadings and
+Displacements/Fixed nodes.
+BC only act on nodes, and therefore node coordinates are used in the creation of
+boundary conditions.
+
+The creation is a little bit tricky, as the format how the node coordinates is
+not the same as in the `Mesh` output.
+Basically the coordinate given here, is not the absolute coordinate in the unit
+of voxelsize, but the number of the node along an axis.
+What does this mean? Here is a short example:
+If you have an image with `x * y * z` voxel, you will end up with
+`(x+1) * (y+1) * (z+1)` nodes. The coordinates for your boundary condition are exactly
+these numbers.
+In the output mesh, the coordinates of the nodes are in the unit of voxelsize!
+
+Beware, that you need to give the boundary condition also in the `(z, y, x)`
+format - the same as the image data!
+
+Again, the mesh data is then in `(x, y, z)` format.
+
 Units
 =====
 
